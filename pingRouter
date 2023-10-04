@@ -1,0 +1,40 @@
+var ip = require('ip');
+
+function checkGetIP() {
+    let ipStrArray;
+    let piIp = ''
+    let res = false;
+    try {
+        piIp = ip.address();
+    } catch (e) {
+        console.log('checkGetIP ' + e)
+    }
+
+    if (piIp) {
+        ipStrArray = piIp.split('.');
+        var ipFirst = ipStrArray[0] + '.' + ipStrArray[1] + '.' + ipStrArray[2];
+        var ipSecond = '.' + ipStrArray[3];
+        res = { ipFirst, ipSecond }
+    }
+    if (!piIp || ipStrArray[0] == '127') {
+        console.log('NO ROUTER')
+        res = {
+            ipFirst: 'NO',
+            ipSecond: 'Router'
+        }
+    }
+
+    return res
+}
+
+module.exports = {
+    checkGetIP
+}
+
+
+// try {
+//   ipRes = checkGetIP();
+
+// } catch (e) {
+//   console.log('checkGetIP ' + e)
+// }
