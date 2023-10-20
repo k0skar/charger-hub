@@ -15,25 +15,12 @@ var oled = new oled(i2cBus, opts);
 
 var font = require('oled-font-5x7');
 
- //oled.clearDisplay();
- //oled.drawLine(1, 1, 128, 32, 1);
-
- function clearDisplay() {
-  oled.clearDisplay();
- }
+// oled.clearDisplay();
+// oled.drawLine(1, 1, 128, 32, 1);
 
 function displayStatus(status, amps, lumens, percentLight, ip) {
   
-  let ampsStr = (amps || amps === 0) ? ' ' + amps + 'A' : ' ???';
-  
-  if (amps) {
-    ampsStr = ' ' + amps + 'A' 
-  } else if (amps === 0) {
-    ampsStr = 'OFF';
-  } else {
-    ampsStr = '???';
-  }
-
+  const ampsStr = amps ? amps + 'A' : '???';
   const lumensStr = (lumens || lumens === 0) ? ' ' + lumens : ' ???';
 
 
@@ -72,5 +59,5 @@ function displayStatus(status, amps, lumens, percentLight, ip) {
 //oled.turnOnDisplay();
 
 module.exports = {
-  displayStatus, clearDisplay
+  displayStatus
 }
