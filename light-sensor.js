@@ -3,9 +3,6 @@ const i2c = require('i2c-bus');
 const GY30_ADDR = 0x23;
 const LUM_REG = 0x10;
 
-//setInterval (readSensor, 500);
-let maxLumens = 0;
-let minLumens = 0;
 let i2c0;
 
 function readSensor() {
@@ -25,19 +22,20 @@ function getAverageBy10Data () {
 				lumensArray.push(measuredLumens);
 				counter++
 	}		
+	const averageLum = lumensArray.reduce((a, b) => a + b )/lumensArray.length
 
-	return lumensArray.reduce((a, b) => a + b )/lumensArray.length
+	return averageLum
 }
 
-function init(params) {
+function init() {
 	try {
 		i2c0 = i2c.openSync(0);
 		const measurement = i2c0.readWordSync(GY30_ADDR, LUM_REG);
 
-		return measurement || true
+		return measurement || 'ZERO'
 	} catch (error) {
 		console.log('Light Sensor Error')
-		return false
+		return 'NOSENSOR'
 	}
 	
 }

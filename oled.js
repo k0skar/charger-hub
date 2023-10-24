@@ -60,6 +60,7 @@ function displayStatus(status, amps, lumens, percentLight, ip) {
     console.log('Display write error ' + e)
   }
 
+
   // obj font - font object in JSON format (see note below on sourcing a font)
   // int size - font size, as multiplier. Eg. 2 would double size, 3 would triple etc.
   // string text - the actual text you want to show on the display.
@@ -68,9 +69,14 @@ function displayStatus(status, amps, lumens, percentLight, ip) {
   // without spaces is supplied as the text, just letter wrapping will apply instead.
 }
 
+
+function turnOff() {
+  oled.turnOffDisplay();
+}
+
 //oled.turnOffDisplay();
 //oled.turnOnDisplay();
 
 module.exports = {
-  displayStatus, clearDisplay
+  displayStatus, clearDisplay, turnOff
 }

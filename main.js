@@ -4,10 +4,7 @@ const lightSensor = require('./light-sensor.js')
 const puppeteer = require('./puppet.js')
 const oled = require('./oled.js')
 const pingIP = require('./pingRouter')
-const { exit } = require('node:process');
 
-let counter = 0;
-let divider = 1;
 let lastLumens = 0;
 
 const mainInterval = 10000;
@@ -17,11 +14,16 @@ let maxValue = 40000;
 let prevAmp = -1;
 
 async function main() {
-	ip = pingIP.checkGetIP();
-	const res = await processLightToAmps();
-	led.blinkBlueOn(500);
+	// ip = pingIP.checkGetIP();
 
-	if (res) {
+
+	const isChargerPageAvailible = true// await puppeteer.pingCharger();
+
+	if (isChargerPageAvailible) {
+		
+		led.blinkBlueOn(500);
+		await processLightToAmps();
+
 		setTimeout(() => {
 			main();
 		}, mainInterval)
@@ -29,10 +31,12 @@ async function main() {
 	} else {
 		startReStart();
 	}
+
+
 }
 
 async function startReStart() {
-	// oled.clearDisplay();
+	oled.clearDisplay();
 	led.blinkGreenOn(200);
 
 	const ip = pingIP.checkGetIP();
@@ -41,7 +45,7 @@ async function startReStart() {
 
 	oled.displayStatus('Starting', false, lastLumens, false, ip);
 
-	
+
 
 	if (ip && lastLumens) {
 
@@ -61,15 +65,15 @@ async function startReStart() {
 		}
 
 	} else {
-		if(!ip) {
+		if (!ip) {
 			console.log('startReStart checkGetIP false')
 		} else {
 			console.log('startReStart light sensor false')
 		}
-		
+
 		setTimeout(() => {
-				startReStart()
-			}, pingInterval)
+			startReStart()
+		}, pingInterval)
 	}
 
 }
@@ -118,6 +122,7 @@ async function processLightToAmps() {
 
 	return res
 }
+
 
 startReStart()
 

@@ -20,7 +20,7 @@ module.exports = {
 		if (!isGreenBlinkInterval) {
 			isGreenBlinkInterval = setInterval(() => {
 				greenLedOut.writeSync(isGreenLedOn ? 0 : 1); // provide 1 or 0 
-				isGreenLedOn = !isGreenLedOn; // toggle state
+				isGreenLedOn = !isGreenLedOn; // toggle state to blink
 			}, interval)
 		}
 	},
@@ -34,7 +34,7 @@ module.exports = {
 		if (!isBluebBinkInterval) {
 			isBluebBinkInterval = setInterval(() => {
 				blueLedOut.writeSync(isBlueLedOn ? 0 : 1); // provide 1 or 0 
-				isBlueLedOn = !isBlueLedOn; // toggle state
+				isBlueLedOn = !isBlueLedOn; // toggle state  to blink
 			}, interval)
 		}
 	},
